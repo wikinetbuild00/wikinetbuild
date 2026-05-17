@@ -1,4 +1,4 @@
-# Wikipedia Network Backboning
+# Multilayer Notable Wiki Network
 
 Pipeline for building a multilingual Wikipedia knowledge network and producing a corrected, weighted edge list for downstream analysis.
 
