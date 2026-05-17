@@ -282,9 +282,12 @@ Detected edges have their weight replaced with the exact full-match count (from 
     journal = {Scientific Data},
     publisher = {Nature Publishing Group},
     year = {2022},
+    month = {Jun},
+    day = {09},
     volume = {9},
     number = {1},
     pages = {290},
+    issn = {2052-4463},
     doi = {10.1038/s41597-022-01369-4},
     url = {https://doi.org/10.1038/s41597-022-01369-4}
   }
