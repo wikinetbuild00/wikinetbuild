@@ -232,7 +232,7 @@ Logs are saved to the `logs/` directory:
 
 ### Weight Calculation
 
-Edge weights represent **the number of entity mentions** detected by DBpedia Spotlight:
+Edge weights represent **the number of entity mentions** detected by DBpedia Spotlight \[1\]:
 
 - **Source**: The Wikipedia article being analyzed
 - **Target**: An entity mentioned within that article's text
@@ -245,6 +245,25 @@ Pseudo-self-loops arise when an entity linker confuses an entity with a family m
 2. Statistical outlier weight (z-score > 1.5) relative to the source node's distribution
 
 Detected edges have their weight replaced with the exact full-match count (from stage 4), which is a more reliable signal.
+
+---
+
+## References
+
+\[1\] Daiber, J., Jakob, M., Hokamp, C., & Mendes, P. N. (2013). Improving efficiency and accuracy in multilingual entity extraction. In *Proceedings of the 9th International Conference on Semantic Systems* (I-SEMANTICS '13), pp. 121–124. ACM. https://doi.org/10.1145/2506182.2506198
+
+  ```bibtex
+  @inproceedings{10.1145/2506182.2506198,
+    author = {Daiber, Joachim and Jakob, Max and Hokamp, Chris and Mendes, Pablo N.},
+    title = {Improving efficiency and accuracy in multilingual entity extraction},
+    year = {2013},
+    publisher = {Association for Computing Machinery},
+    doi = {10.1145/2506182.2506198},
+    booktitle = {Proceedings of the 9th International Conference on Semantic Systems},
+    pages = {121–124},
+    series = {I-SEMANTICS '13}
+  }
+  ```
 
 ---
 
