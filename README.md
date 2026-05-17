@@ -49,8 +49,9 @@ Pipeline for building a multilingual Wikipedia knowledge network and producing a
 │                                                             │
 │  Input:  SpotlightWeightSource_MMDD_HHMM_fullmatch.csv      │
 │  Output: SpotlightWeightSource_MMDD_HHMM_fullmatch_corrected.csv │
-│  Purpose: Replace weights on pseudo-self-loops with         │
-│           exact match counts                                │
+│  Purpose: Replace weights on surname-confused edges with    │
+│           full-name match count or 1.0 (see correction      │
+│           logic in Statistical Methodology)                 │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -240,11 +241,15 @@ Edge weights represent **the number of entity mentions** detected by DBpedia Spo
 
 ### Spurious Edge Correction
 
-Pseudo-self-loops arise when an entity linker confuses an entity with a family member sharing the same surname (e.g., "Darwin" → George Darwin instead of Charles Darwin). They are detected by requiring **both**:
-1. Shared name components between source and target titles
-2. Statistical outlier weight (z-score > 1.5) relative to the source node's distribution
+Spotlight sometimes inflates edge weights when two people share a surname — e.g. a mention of "Darwin" in Charles Darwin's biography may be attributed to George Darwin instead. These edges are flagged when **both** conditions hold:
+1. Source and target page titles share at least one non-stopword token of length > 3
+2. The Spotlight weight is a statistical outlier for that source node (z-score > 1.5 relative to all outgoing weights from that node)
 
-Detected edges have their weight replaced with the exact full-match count (from stage 4), which is a more reliable signal.
+Flagged edges are corrected in one of two ways:
+- **Target title is an ordered substring of the source title** (e.g. "Napoleon" inside "Napoleon III"): weight is set to **1.0** — the full-name match is also unreliable here because the shorter name always appears inside the longer one, but the hyperlink confirms the edge exists.
+- **Otherwise**: weight is replaced by the **exact full-name match count** (from stage 4), which requires the complete name to appear and is therefore a more precise signal.
+
+Non-flagged edges retain their original Spotlight weight.
 
 ---
 
